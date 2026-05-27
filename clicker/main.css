@@ -1,0 +1,39 @@
+.weapons-preview {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.weapons-preview h3 {
+    color: white;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 5px black;
+}
+
+.weapons-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.weapon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weapon-item img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+
+    background: rgba(0,0,0,0.4);
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.weapon-item span {
+    margin-top: 4px;
+    color: white;
+    font-size: 12px;
+}
+

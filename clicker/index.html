@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clicker Game</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+
+            background-image: url("zombie_fon.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        h1 {
+            color: #5AAE22;
+            font-size: 60px;
+            margin: 0;
+            text-shadow: 2px 2px 10px black;
+        }
+
+        #clickImg {
+            width: 220px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            user-select: none;
+        }
+
+        #clickImg:active {
+            transform: scale(0.9);
+        }
+
+        #upgradeBtn {
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            background: rgb(7, 129, 119);
+            cursor: pointer;
+        }
+
+        .effect {
+            position: fixed;
+            width: 120px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: bloodEffect 0.6s forwards;
+        }
+
+        @keyframes bloodEffect {
+            0% {
+                opacity: 1;
+                transform: scale(0.3);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.5) translateY(-60px);
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <h1 id="myId">Click to kill zombies!!!</h1>
+
+    <img id="clickImg" src="bat.png" alt="weapon">
+
+    <button id="upgradeBtn">Upgrade your weapon!!!</button>
+
+    <script>
+        const el = document.getElementById("myId")
+        const clickImg = document.getElementById("clickImg")
+        const upgradeBtn = document.getElementById("upgradeBtn")
+
+        let amount = 0
+        let bonus = 1
+        let cost = 25
+
+        const weapons = [
+            "bat.png",
+            "knife.png",
+            "pistol.png",
+            "russian_rifle.png",
+            "american_rifle.png"
+        ]
+
+        let weaponIndex = 0
+
+        function spawnEffect(x, y) {
+            const effect = document.createElement("img")
+
+            effect.src = "blood.png"
+            effect.classList.add("effect")
+
+            effect.style.left = x - 60 + "px"
+            effect.style.top = y - 60 + "px"
+
+            document.body.appendChild(effect)
+
+            setTimeout(() => {
+                effect.remove()
+            }, 600)
+        }
+
+        clickImg.addEventListener("click", (e) => {
+            amount += bonus
+            el.innerHTML = amount
+
+            spawnEffect(e.clientX, e.clientY)
+        })
+
+        function upgrade() {
+            if (amount >= cost) {
+                amount -= cost
+                bonus *= 2
+                cost *= 2
+
+                if (weaponIndex < weapons.length - 1) {
+                    weaponIndex++
+                    clickImg.src = weapons[weaponIndex]
+                }
+
+                el.innerHTML = amount
+            } else {
+                alert(`Not enough money! You need ${cost}`)
+            }
+        }
+
+        upgradeBtn.addEventListener("click", upgrade)
+    </script>
+
+</body>
+</html>
